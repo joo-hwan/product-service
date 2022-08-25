@@ -1,14 +1,17 @@
 package com.study.webfluxdemo.controlller;
 
+import com.study.webfluxdemo.dto.MultiplyRequestDto;
 import com.study.webfluxdemo.dto.Response;
 import com.study.webfluxdemo.service.ReactiveMathService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import java.util.Map;
+
+@Slf4j
 @RestController
 @RequestMapping("reactive-math")
 public class ReactiveMathController {
@@ -26,5 +29,17 @@ public class ReactiveMathController {
     @GetMapping("table/{input}")
     public Flux<Response> multiplicationTable(@PathVariable int input) {
         return reactiveMathService.multiplicationTable(input);
+    }
+
+    @GetMapping(value = "table/{input}/stream", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+    public Flux<Response> multiplicationTableStream(@PathVariable int input) {
+        return reactiveMathService.multiplicationTable(input);
+    }
+
+    @PostMapping("multiply")
+    public Mono<Response> multiply(@RequestBody Mono<MultiplyRequestDto> requestDtoMono,
+                                   @RequestHeader Map<String, String> headers) {
+        log.info(headers.toString());
+        return reactiveMathService.multiply(requestDtoMono);
     }
 }
