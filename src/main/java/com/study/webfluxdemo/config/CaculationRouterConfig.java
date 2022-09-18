@@ -13,7 +13,7 @@ public class CaculationRouterConfig {
     CalculatorHandler calculatorHandler;
 
     @Bean
-    public RouterFunction<ServerResponse> highLevelRouter() {
+    public RouterFunction<ServerResponse> calculationRouter() {
         return RouterFunctions.route()
                 .path("caculator", this::serverResponseRouterFunction)
                 .build();

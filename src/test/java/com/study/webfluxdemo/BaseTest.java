@@ -3,11 +3,8 @@ package com.study.webfluxdemo;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest
-class WebfluxDemoApplicationTests {
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
+class BaseTest {
 
-	@Test
-	void contextLoads() {
-	}
 
 }
